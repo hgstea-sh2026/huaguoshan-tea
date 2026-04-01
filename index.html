@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上海品茶工作室 · 花果山</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #162a20;
+            --green: #1e4030;
+            --mid: #2a5a3d;
+            --light: #4a7c5f;
+            --gold: #c9a84c;
+            --gold-light: #e8c96a;
+            --cream: #faf6ef;
+            --cream-dark: #f0e8d8;
+            --warm: #5a4a3a;
+            --border: #ddd0b8;
+            --shadow: rgba(22,42,32,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--cream);
+            color: #2a2a2a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Decorative background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -30%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(ellipse, rgba(42,90,61,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -30%;
+            left: -20%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 520px;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow:
+                0 4px 20px rgba(22,42,32,0.06),
+                0 20px 60px rgba(22,42,32,0.10),
+                0 0 0 1px rgba(201,168,76,0.08);
+        }
+
+        /* Top banner */
+        .banner {
+            background: linear-gradient(160deg, #0f2018 0%, #1a3528 50%, #1e4030 100%);
+            padding: 50px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        .banner-content { position: relative; z-index: 1; text-align: center; }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            box-shadow: 0 8px 30px rgba(201,168,76,0.35);
+        }
+
+        .brand-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 6px;
+            margin-bottom: 6px;
+        }
+        .brand-sub {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 5px;
+            margin-bottom: 24px;
+        }
+
+        .banner-tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .b-tag {
+            padding: 5px 16px;
+            border: 1px solid rgba(201,168,76,0.4);
+            border-radius: 20px;
+            color: var(--gold-light);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        /* Avatar wave cut */
+        .wave {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Body */
+        .body-section {
+            padding: 40px 40px 36px;
+        }
+
+        .greeting {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+        .greeting-sub {
+            font-size: 13px;
+            color: var(--warm);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border), transparent);
+            margin: 28px 0;
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            text-align: center;
+            padding: 18px 10px;
+            background: var(--cream);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .stat-num {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--mid);
+            line-height: 1;
+        }
+        .stat-lbl {
+            font-size: 10px;
+            color: var(--warm);
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        /* Contact section */
+        .contact-section { margin-bottom: 28px; }
+        .contact-title {
+            font-size: 11px;
+            color: var(--light);
+            letter-spacing: 4px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+
+        .phone-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 20px 24px;
+            background: linear-gradient(135deg, var(--deep), var(--green));
+            border-radius: 18px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .phone-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(22,42,32,0.25);
+        }
+        .phone-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(201,168,76,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .phone-info { flex: 1; }
+        .phone-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+        .phone-num {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold-light);
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        /* Wechat QR */
+        .wechat-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--cream);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .wechat-block:hover { border-color: var(--gold); box-shadow: 0 4px 15px var(--shadow); }
+        .wechat-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #07c160, #1aad19);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .wechat-info { flex: 1; }
+        .wechat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+        .wechat-id {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .wechat-arrow {
+            font-size: 18px;
+            color: var(--border);
+        }
+
+        /* QQ blocks */
+        .qq-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--cream);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        .qq-block:hover { border-color: #12b7f5; box-shadow: 0 4px 15px rgba(18,183,245,0.12); }
+        .qq-block.qq-secondary { background: #fafafe; }
+        .qq-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #12b7f5, #1a80e6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .qq-icon-secondary {
+            background: linear-gradient(135deg, #b0b0b0, #888);
+        }
+        .qq-info { flex: 1; }
+        .qq-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+        .qq-num {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a80e6;
+            letter-spacing: 2px;
+        }
+        .qq-arrow {
+            font-size: 18px;
+            color: var(--border);
+        }
+
+        /* Wechat QR inline */
+        .wechat-qr-inline {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 16px;
+            border: 1px solid #c8e6c9;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0;
+        }
+        .wechat-qr-inline:hover {
+            border-color: #07c160;
+            box-shadow: 0 4px 15px rgba(7,193,96,0.15);
+            transform: translateY(-1px);
+        }
+
+        /* Location */
+        .location-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: var(--cream);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+        }
+        .location-icon {
+            font-size: 20px;
+        }
+        .location-text {
+            font-size: 13px;
+            color: var(--warm);
+            line-height: 1.6;
+        }
+        .location-text strong { color: var(--green); font-weight: 600; }
+
+        /* CTA buttons */
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .btn-call {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--deep);
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Noto Sans SC', sans-serif;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+        }
+        .btn-call:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(201,168,76,0.5);
+        }
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: var(--mid);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .btn-secondary:hover {
+            border-color: var(--mid);
+            background: rgba(42,90,61,0.04);
+        }
+
+        /* Footer note */
+        .footer-note {
+            text-align: center;
+            padding: 0 40px 32px;
+        }
+        .footer-note p {
+            font-size: 11px;
+            color: var(--warm);
+            opacity: 0.5;
+            line-height: 1.8;
+        }
+
+        /* Wechat modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            max-width: 340px;
+            width: 100%;
+            animation: popIn 0.3s ease;
+        }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--cream-dark);
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-box .wechat-big {
+            width: 180px;
+            height: 180px;
+            background: var(--cream);
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border: 1px solid var(--border);
+        }
+        .modal-box h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+        .modal-box p { font-size: 13px; color: var(--warm); }
+        .modal-box .save-hint {
+            margin-top: 16px;
+            padding: 10px;
+            background: var(--cream);
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--light);
+        }
+
+        /* Floating decoration */
+        .float-deco {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.05);
+            z-index: 0;
+        }
+        .float-deco-1 { top: 20px; right: -40px; }
+        .float-deco-2 { bottom: 100px; left: -30px; width: 80px; height: 80px; }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card { animation: fadeUp 0.6s ease; }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .banner { padding: 40px 28px 70px; }
+            .brand-name { font-size: 24px; letter-spacing: 4px; }
+            .body-section { padding: 32px 28px 28px; }
+            .phone-num { font-size: 22px; }
+            .stats-row { gap: 10px; }
+            .stat-num { font-size: 20px; }
+            .footer-note { padding: 0 28px 28px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Wechat Modal -->
+    <div class="modal-overlay" id="wechatModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="wechat-big" style="background:none;border:none;">
+                <img src="wechat-qr.png" alt="微信二维码" style="width:180px;height:180px;border-radius:12px;object-fit:cover;display:block;">
+            </div>
+            <h3>添加客服微信</h3>
+            <p>长按识别二维码，或搜索微信号</p>
+            <p style="font-family:'Noto Serif SC',serif; font-size:20px; font-weight:700; color:#07c160; letter-spacing:3px; margin-top:6px;">sda001_</p>
+            <div class="save-hint">💡 建议截图保存，方便日后联系</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <!-- Decorative -->
+        <div class="float-deco float-deco-1"></div>
+        <div class="float-deco float-deco-2"></div>
+
+        <!-- Banner -->
+        <div class="banner">
+            <div class="banner-content">
+                <div class="brand-logo">🍵</div>
+                <div class="brand-name">花果山</div>
+                <div class="brand-sub">上海品茶工作室</div>
+                <div class="banner-tags">
+                    <span class="b-tag">高端品茶</span>
+                    <span class="b-tag">私人空间</span>
+                    <span class="b-tag">上门服务</span>
+                </div>
+            </div>
+            <!-- Wave cut -->
+            <svg class="wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M0,60 C240,20 480,50 720,30 C960,10 1200,50 1440,20 L1440,60 Z" fill="#faf6ef"/>
+            </svg>
+        </div>
+
+        <!-- Body -->
+        <div class="body-section">
+            <div class="greeting">您好，欢迎来到花果山 🍃</div>
+            <div class="greeting-sub">
+                我们是扎根上海十二年的高端品茶工作室，<br>
+                致力于为您提供纯正、舒适、私密的品茶体验。<br>
+                无论商务洽谈还是友人小聚，花果山始终是您的理想之选。
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-num">12+</div>
+                    <div class="stat-lbl">年行业深耕</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">5万+</div>
+                    <div class="stat-lbl">满意顾客</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">50+</div>
+                    <div class="stat-lbl">覆盖门店</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Contact -->
+            <div class="contact-section">
+                <div class="contact-title">联系方式 · Contact</div>
+
+                <!-- Phone -->
+                <a href="tel:19130932308" class="phone-block">
+                    <div class="phone-icon">📞</div>
+                    <div class="phone-info">
+                        <div class="phone-label">咨询热线</div>
+                        <div class="phone-num">191-3093-2308</div>
+                    </div>
+                </a>
+
+                <!-- QQ Primary -->
+                <a href="https://qm.qq.com/cgi-bin/qm/qr?k=Qq5xxxxxxxxxxxx" class="qq-block" target="_blank">
+                    <div class="qq-icon">💬</div>
+                    <div class="qq-info">
+                        <div class="qq-label">QQ 联系</div>
+                        <div class="qq-num">3788431265</div>
+                    </div>
+                    <div class="qq-arrow">›</div>
+                </a>
+
+                <!-- QQ Secondary -->
+                <a href="https://qm.qq.com/cgi-bin/qm/qr?k=Qq5xxxxxxxxxxxx" class="qq-block qq-secondary" target="_blank">
+                    <div class="qq-icon qq-icon-secondary">📱</div>
+                    <div class="qq-info">
+                        <div class="qq-label">备用 QQ</div>
+                        <div class="qq-num">275477007</div>
+                    </div>
+                    <div class="qq-arrow">›</div>
+                </a>
+
+                <!-- Wechat QR inline -->
+                <div class="wechat-qr-inline" onclick="openModal()">
+                    <img src="wechat-qr.png" alt="微信二维码" style="width:60px;height:60px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+                    <div class="wechat-info" style="flex:1;">
+                        <div class="wechat-label">微信联系</div>
+                        <div class="wechat-id" style="font-size:16px;letter-spacing:1px;">sda001_ &nbsp;<span style="font-size:12px;opacity:0.6;">› 点击查看大图</span></div>
+                    </div>
+                    <div class="wechat-arrow">›</div>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="location-row">
+                <div class="location-icon">📍</div>
+                <div class="location-text">
+                    <strong>覆盖全上海</strong> — 浦东、黄浦、静安、徐汇、长宁、普陀、闵行等各区均设工作室<br>
+                    <span style="font-size:11px;opacity:0.6;">提供全城上门服务，30分钟极速达</span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-group">
+                <a href="tel:19130932308" class="btn-call">
+                    📞 立即拨打 191-3093-2308
+                </a>
+                <a href="https://qm.qq.com/cgi-bin/qm/qr?k=Qq5xxxxxxxxxxxx" class="btn-secondary" target="_blank">
+                    💬 QQ联系 3788431265
+                </a>
+                <div class="btn-secondary" onclick="openModal()">
+                    💚 微信 sda001_ &nbsp;›;
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-note">
+            <p>© 2026 花果山品茶工作室 Huaguoshan Tea House</p>
+            <p>用心泡好每一杯茶，为您的都市生活增添一份宁静</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('wechatModal').classList.add('show');
+        }
+        function closeModal() {
+            document.getElementById('wechatModal').classList.remove('show');
+        }
+        document.getElementById('wechatModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>
